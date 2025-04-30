@@ -36,9 +36,12 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
     NSError *setCategoryError = nil;
 
     // Allows the application to mix its audio with audio from other apps.
-    if (![session setCategory:AVAudioSessionCategoryAmbient
-                  withOptions:AVAudioSessionCategoryOptionMixWithOthers
-                        error:&setCategoryError]) {
+    
+    // Set the audio session category to allow Bluetooth playback
+    if (![session setCategory:AVAudioSessionCategoryPlayAndRecord
+        withOptions:AVAudioSessionCategoryOptionMixWithOthers | AVAudioSessionCategoryOptionAllowBluetooth | AVAudioSessionCategoryOptionAllowBluetoothA2DP
+        error:&setCategoryError]) {
+
 
         NSLog (@"Error setting audio session category.");
         return;
